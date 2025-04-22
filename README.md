@@ -8,10 +8,10 @@
 
 ## Description
 
-Redis Gui Manager is a gui redis client.
-This tool is very fast.
-This can find key, value, hash value by sql query.
-Enjoy.
+Redis Gui Manager is a gui redis client.  
+This tool is very fast.  
+This can find key, value, hash value by sql query.  
+Enjoy.  
 
 ## LICENSE
 
