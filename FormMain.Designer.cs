@@ -151,6 +151,7 @@ namespace RedisGuiManager
 			this.imageList_main.Images.SetKeyName(4, "Class_489");
 			this.imageList_main.Images.SetKeyName(5, "keyword");
 			this.imageList_main.Images.SetKeyName(6, "sql");
+			this.imageList_main.Images.SetKeyName(7, "disconnect");
 			// 
 			// panel1
 			// 
@@ -262,9 +263,11 @@ namespace RedisGuiManager
             this.reload_server_ToolStripMenuItem,
             this.edit_connection_ToolStripMenuItem,
             this.disconnect_connection_ToolStripMenuItem,
+            this.reconnectToolStripMenuItem,
             this.delete_connection_ToolStripMenuItem});
 			this.contextMenuStrip_redis.Name = "contextMenuStrip_redis";
-			this.contextMenuStrip_redis.Size = new System.Drawing.Size(297, 350);
+			this.contextMenuStrip_redis.Size = new System.Drawing.Size(307, 374);
+			this.contextMenuStrip_redis.Size = new System.Drawing.Size(307, 374);
 			// 
 			// add_db_to_list_ToolStripMenuItem
 			// 
@@ -314,7 +317,7 @@ namespace RedisGuiManager
 			// remove_keys_from_registered_dbs_ToolStripMenuItem
 			// 
 			this.remove_keys_from_registered_dbs_ToolStripMenuItem.Name = "remove_keys_from_registered_dbs_ToolStripMenuItem";
-			this.remove_keys_from_registered_dbs_ToolStripMenuItem.Size = new System.Drawing.Size(296, 24);
+			this.remove_keys_from_registered_dbs_ToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
 			this.remove_keys_from_registered_dbs_ToolStripMenuItem.Text = "Delete keys from registered DBs";
 			this.remove_keys_from_registered_dbs_ToolStripMenuItem.Click += new System.EventHandler(this.remove_keys_from_registered_dbs_ToolStripMenuItem_Click);
 			// 
@@ -322,7 +325,7 @@ namespace RedisGuiManager
 			// 
 			this.remove_keys_from_whole_dbs_ToolStripMenuItem.Image = global::RedisGuiManager.Properties.Resources.action_Cancel_16xLG;
 			this.remove_keys_from_whole_dbs_ToolStripMenuItem.Name = "remove_keys_from_whole_dbs_ToolStripMenuItem";
-			this.remove_keys_from_whole_dbs_ToolStripMenuItem.Size = new System.Drawing.Size(296, 24);
+			this.remove_keys_from_whole_dbs_ToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
 			this.remove_keys_from_whole_dbs_ToolStripMenuItem.Text = "Delete keys from whole DBs";
 			this.remove_keys_from_whole_dbs_ToolStripMenuItem.Click += new System.EventHandler(this.remove_keys_from_whole_dbs_ToolStripMenuItem_Click);
 			// 
@@ -372,6 +375,13 @@ namespace RedisGuiManager
 			this.disconnect_connection_ToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
 			this.disconnect_connection_ToolStripMenuItem.Text = "Unload all data";
 			this.disconnect_connection_ToolStripMenuItem.Click += new System.EventHandler(this.disconnect_connection_ToolStripMenuItem_Click);
+			// 
+			// reconnectToolStripMenuItem
+			// 
+			this.reconnectToolStripMenuItem.Name = "reconnectToolStripMenuItem";
+			this.reconnectToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
+			this.reconnectToolStripMenuItem.Text = "&Reconnect";
+			this.reconnectToolStripMenuItem.Click += new System.EventHandler(this.reconnectToolStripMenuItem_Click);
 			// 
 			// delete_connection_ToolStripMenuItem
 			// 
@@ -548,6 +558,7 @@ namespace RedisGuiManager
 		private System.Windows.Forms.ToolStripMenuItem copy_key_to_db_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem copy_key_to_machine_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem migrate_keys_ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem reconnectToolStripMenuItem;
 	}
 }
 

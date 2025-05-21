@@ -45,12 +45,12 @@ namespace RedisGuiManager
             Settings = settings;
         }
 
-        public OperateResult Connect()
+        public void Connect()
         {
-            if (config == null)
-            {
-                return new OperateResult(false, "\r\nInvalid configuration");
-            }
+            //if (config == null)
+            //{
+            //    return new OperateResult(false, "\r\nInvalid configuration");
+            //}
 
             ConfigurationOptions temp_config = new ConfigurationOptions()
             {
@@ -114,7 +114,7 @@ namespace RedisGuiManager
                 }
                 catch (System.Exception ex)
                 {
-                    return new OperateResult(false, "\r\nTunnel connection fail\r\n" + ex.ToString());
+                    throw new RedisConnectionFailedException("\r\nTunnel connection fail", ex);
                 }
             }
 
@@ -124,13 +124,11 @@ namespace RedisGuiManager
             }
             catch (RedisConnectionException ex)
 			{
-                return new OperateResult(false, "\r\nConnection fail\r\n" + ex.ToString());
+                throw new RedisConnectionFailedException("\r\nConnection fail", ex);
 			}
 
             RedisServer = connection.GetServer(string.Format("{0}:{1}", ip_address, port));
             Redis = connection.GetDatabase();
-
-            return new OperateResult(true, "");
         }
 
         public void Close()

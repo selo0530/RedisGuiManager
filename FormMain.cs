@@ -1081,13 +1081,47 @@ namespace RedisGuiManager
 
                 if (redisClient.Redis == null)
                 {
-                    OperateResult connect = redisClient.Connect();
-                    if (connect.IsSuccess == false)
+                    try
                     {
-                        MessageBox.Show(string.Format("Failed to connect to redis[{0}] IpAddress:{1} Port:{2}\r\n", redisClient.Settings.name, redisClient.Settings.host, redisClient.Settings.port) + connect.Message);
-
-                        return;
+                        redisClient.Connect();
+                        // If connection is successful, ensure the icon is normal
+                        select.ImageKey = "VirtualMachine";
+                        select.SelectedImageKey = "VirtualMachine";
                     }
+                    catch (RedisConnectionFailedException ex)
+                    {
+                        string errorMessage = string.Format(
+                            "Failed to connect to Redis server: {0} ({1}:{2})\r\n\r\nDetails: {3}",
+                            redisClient.Settings.name,
+                            redisClient.Settings.host,
+                            redisClient.Settings.port,
+                            ex.InnerException != null ? ex.InnerException.Message : ex.Message
+                        );
+                        MessageBox.Show(errorMessage, "Redis Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        select.ImageKey = "disconnect"; // Assuming "disconnect" image key
+                        select.SelectedImageKey = "disconnect";
+                        return; // Exit the method as connection failed
+                    }
+                    catch (Exception ex) // Catch any other unexpected exceptions during connect
+                    {
+                        string errorMessage = string.Format(
+                            "An unexpected error occurred while connecting to Redis server: {0} ({1}:{2})\r\n\r\nDetails: {3}",
+                            redisClient.Settings.name,
+                            redisClient.Settings.host,
+                            redisClient.Settings.port,
+                            ex.Message
+                        );
+                        MessageBox.Show(errorMessage, "Redis Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        select.ImageKey = "disconnect"; // Assuming "disconnect" image key
+                        select.SelectedImageKey = "disconnect";
+                        return; // Exit the method
+                    }
+                }
+                else
+                {
+                    // If already connected, ensure the icon is normal
+                    select.ImageKey = "VirtualMachine";
+                    select.SelectedImageKey = "VirtualMachine";
                 }
 
                 if (select.Nodes.Count == 0 || reload)
@@ -2048,6 +2082,26 @@ namespace RedisGuiManager
 						}
 					}
 				}
+			}
+		}
+
+		private void reconnectToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			TreeNode selectedNode = treeView_server.SelectedNode;
+			if (selectedNode == null)
+			{
+				return;
+			}
+
+			if (selectedNode.Tag is RedisClient client)
+			{
+				// Set the icon to loading while attempting to reconnect
+				selectedNode.ImageKey = "loading";
+				selectedNode.SelectedImageKey = "loading";
+				treeView_server.Invalidate(true); // Force redraw
+				Application.DoEvents(); // Process UI updates
+
+				RefreshRedisKey(selectedNode, true); // Call with reload = true to force reconnection and UI refresh
 			}
 		}
 	}
